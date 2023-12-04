@@ -1,0 +1,8 @@
+plugins {
+    id 'advent.of.code.scala-common-conventions'
+}
+
+dependencies {
+    api("org.http4s:http4s-dsl_${scalaVersion}:0.23.4")
+    api("org.http4s:http4s-ember-client_${scalaVersion}:0.23.4")
+}

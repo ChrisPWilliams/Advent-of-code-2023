@@ -1,0 +1,7 @@
+.gradle
+.idea
+build
+.iml
+
+# Ignore adventofcode.com session cookie:
+Cookie.scala

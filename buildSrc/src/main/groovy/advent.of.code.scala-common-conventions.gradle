@@ -1,0 +1,35 @@
+plugins {
+    // Apply the scala Plugin to add support for Scala.
+    id 'scala'
+    id 'com.github.johnrengelman.shadow'
+    id 'java-library'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+ext {
+    scalaVersion = "2.13"
+}
+
+
+dependencies {
+    constraints {
+        // Define dependency versions as constraints
+        implementation 'org.scala-lang:scala-library:2.13.10'
+    }
+
+    // Use Scala 2.13 in our library project
+    implementation 'org.scala-lang:scala-library'
+
+    // Use JUnit Jupiter for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+} // replace with scalatest
