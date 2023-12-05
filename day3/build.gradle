@@ -1,0 +1,12 @@
+plugins {
+    id 'advent.of.code.scala-application-conventions'
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'advent.of.code.day3.DayThree'
+}
+
+dependencies {
+    api project(":utils")
+}

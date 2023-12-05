@@ -10,7 +10,7 @@ object DayTwo extends Solution with IOApp.Simple {
 
   def solve(puzzleInput: String): String = {
     val partOne = solvePartOne(puzzleInput)
-    val partTwo = "" //solvePartTwo(puzzleInput)
+    val partTwo = solvePartTwo(puzzleInput)
     "Part 1 solution: " ++ partOne ++ "\nPart 2 solution: " ++ partTwo
   }
 
@@ -56,6 +56,17 @@ object DayTwo extends Solution with IOApp.Simple {
         round.green.getOrElse(0) <= greenLimit
       ).reduce(_&&_)
     ).map(_.id).sum.toString
+  }
 
+  def solvePartTwo(str: String): String = {
+    val games = parseGames(str)
+
+    games.map(game =>
+      game.rounds.map(
+        round => (round.red.getOrElse(0), round.blue.getOrElse(0), round.green.getOrElse(0))
+      ).reduce((r1, r2) => (r1._1 max r2._1, r1._2 max r2._2, r1._3 max r2._3))
+    ).map {
+      case (red, blue, green) => red * blue * green
+    }.sum.toString
   }
 }
