@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = 'Advent-of-code-2023'
-include(':utils','day1','day2','day3','day4')
+include(':utils','day1','day2','day3','day4','day5')
