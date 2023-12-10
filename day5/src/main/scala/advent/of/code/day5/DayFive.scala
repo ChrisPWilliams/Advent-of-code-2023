@@ -10,7 +10,7 @@ object DayFive extends Solution with IOApp.Simple {
 
   def solve(puzzleInput: String): String = {
     val partOne = solvePartOne(puzzleInput)
-    val partTwo = "" //solvePartTwo(puzzleInput)
+    val partTwo = ""//solvePartTwo(puzzleInput)
     "Part 1 solution: " ++ partOne ++ "\nPart 2 solution: " ++ partTwo
   }
 
@@ -31,7 +31,7 @@ object DayFive extends Solution with IOApp.Simple {
                     humidityToLocation: BigInt => BigInt
                     )
 
-  def parseInput(input: String): Almanac = {
+  def parseInput(input: String, puzzlePart: Int): Almanac = {
     val getSectionsPattern =
       """seeds: ([0-9 ]+)\n
         |seed-to-soil map:\n([0-9 \n]+)\n
@@ -77,8 +77,15 @@ object DayFive extends Solution with IOApp.Simple {
 
   val parseMappingSectionToFunc: String => BigInt => BigInt = parseMappingSectionToRaw andThen mappingsToFunc
 
+  def part2GetRanges(seeds: String): Seq[BigInt] = {
+    val parseRangePattern = "([0-9]+) ([0-9]+)".r
+    parseRangePattern.findAllMatchIn(seeds).flatMap(m =>
+      BigInt(m.group(1)) to (BigInt(m.group(1)) + BigInt(m.group(2)) - 1)
+    ).toSeq //might need the regex but otherwise got to scrap this approach
+  }
+
   def solvePartOne(puzzleInput: String): String = {
-    val almanac = parseInput(puzzleInput)
+    val almanac = parseInput(puzzleInput, puzzlePart = 1)
     val getSeedLocation: BigInt => BigInt = {
       almanac.seedToSoil andThen
         almanac.soilToFertilizer andThen
@@ -90,5 +97,8 @@ object DayFive extends Solution with IOApp.Simple {
     }
     almanac.seeds.map(getSeedLocation).min.toString
   }
+  // part 2 plan: work backwards introducing concept of seed streams: each unique path through the maps is one stream.
+  // each stream hits a contiguous block of locations- within a stream, seed x + 1 is guaranteed to be at location f(x) + 1
+  // check each block from lowest upwards, mapping back to the seed ranges, checking if we have a seed in the range and getting the lowest
 
 }
